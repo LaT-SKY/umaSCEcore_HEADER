@@ -13,7 +13,7 @@ class scc
 {
 protected:
 	int type, fs, sfs, dr, tr, gatr, trap, speed, stamina, power, willp, wit, sp;
-	int v4g1mainept, v4g1foldept, v4g1spept;
+	int v3g2mainept, v3g2foldept, v3g2spept;
 	double v3g1ept, v2ept;
 
 	bool isdi;
@@ -31,6 +31,9 @@ public:
 	bool EvalV3G2();
 	bool EvalV3G1();
 	bool EvalV2();
+	bool EvalDiG1();
+	bool EvalV4G1();
+
 };
 
 bool scc::Scan(int type, int fs, int sfs, int dr, int tr, int gatr, int trap, int speed, int stamina, int power, int willp, int wit, int sp)
@@ -58,10 +61,10 @@ bool scc::Scan(int type, int fs, int sfs, int dr, int tr, int gatr, int trap, in
 	return 0;
 }
 
-bool scc::Clear(int type, int fs, int sfs, int dr, int tr, int gatr, int trap, int speed, int stamina, int power, int willp, int wit, int sp, int v4g1mainept, int v4g1foldept, int v4g1spept, double v3g1ept, double v2ept)
+bool scc::Clear(int type, int fs, int sfs, int dr, int tr, int gatr, int trap, int speed, int stamina, int power, int willp, int wit, int sp, int v3g2mainept, int v3g2foldept, int v3g2spept, double v3g1ept, double v2ept)
 {
 	scc::type = 0; scc::fs = 0; scc::sfs = 0; scc::dr = 0; scc::tr = 0; scc::gatr = 0; scc::trap = 0; scc::speed = 0; scc::stamina = 0; scc::power = 0; scc::willp = 0; scc::wit = 0; scc::sp = 0;
-	scc::v4g1mainept = 0; scc::v4g1foldept = 0; scc::v4g1spept = 0;
+	scc::v3g2mainept = 0; scc::v3g2foldept = 0; scc::v3g2spept = 0;
 	scc::v3g1ept = 0;
 	scc::v2ept = 0;
 	return 0;
@@ -138,7 +141,6 @@ bool scc::Get(string type)
 			scc::sp = num;
 			return 0;
 		}
-
 	}
 	catch (std::exception& e)
 	{
@@ -202,6 +204,26 @@ int scc::Report(string ty)
 		{
 			return sp;
 		}
+		else if (type == "v3g1ept")
+		{
+			scc::v3g1ept = num;
+			return 0;
+		}
+		else if (type == "v3g2mainept")
+		{
+			scc::v3g2mainept = num;
+			return 0;
+		}
+		else if (type == "v3g2foldept")
+		{
+			scc::v3g2foldept = num;
+			return 0;
+		}
+		else if (type == "v3g2spept")
+		{
+			scc::v3g2spept = num;
+			return 0;
+		}
 
 	}
 	catch (std::exception& e)
@@ -241,7 +263,7 @@ bool scc::Exchange(scc opt)
 {
 	try
 	{
-		scc temp;
+		scc temp{};
 
 		opt.Copy(temp);
 
@@ -339,30 +361,30 @@ bool scc::EvalV3G2()
 	int gtrendround = trendround * gat;
 	//end
 	
-	//v4g1mainept
+	//v3g2mainept
 	if (type == 1)
-		scc::v4g1mainept = (afsrate + 0.1 * anfsrate * scc::speed) * gfailround + (afsrate + 0.1 * afsrate * scc::speed) * gtrendround - gfailround - gtrendround;
+		scc::v3g2mainept = (afsrate + 0.1 * anfsrate * scc::speed) * gfailround + (afsrate + 0.1 * afsrate * scc::speed) * gtrendround - gfailround - gtrendround;
 	else if (type == 2)
-		scc::v4g1mainept = (afsrate + 0.1 * anfsrate * scc::stamina) * gfailround + (afsrate + 0.1 * afsrate * scc::stamina) * gtrendround - gfailround - gtrendround;
+		scc::v3g2mainept = (afsrate + 0.1 * anfsrate * scc::stamina) * gfailround + (afsrate + 0.1 * afsrate * scc::stamina) * gtrendround - gfailround - gtrendround;
 	else if (type == 3)
-		scc::v4g1mainept = (afsrate + 0.1 * anfsrate * scc::power) * gfailround + (afsrate + 0.1 * afsrate * scc::power) * gtrendround - gfailround - gtrendround;
+		scc::v3g2mainept = (afsrate + 0.1 * anfsrate * scc::power) * gfailround + (afsrate + 0.1 * afsrate * scc::power) * gtrendround - gfailround - gtrendround;
 	else if (type == 4)
-		scc::v4g1mainept = (afsrate + 0.1 * anfsrate * scc::willp) * gfailround + (afsrate + 0.1 * afsrate * scc::willp) * gtrendround - gfailround - gtrendround;
+		scc::v3g2mainept = (afsrate + 0.1 * anfsrate * scc::willp) * gfailround + (afsrate + 0.1 * afsrate * scc::willp) * gtrendround - gfailround - gtrendround;
 	else if (type == 5)
-		scc::v4g1mainept = (afsrate + 0.1 * anfsrate * scc::wit) * gfailround + (afsrate + 0.1 * afsrate * scc::wit) * gtrendround - gfailround - gtrendround;
-	//v4g1foldept
+		scc::v3g2mainept = (afsrate + 0.1 * anfsrate * scc::wit) * gfailround + (afsrate + 0.1 * afsrate * scc::wit) * gtrendround - gfailround - gtrendround;
+	//v3g2foldept
 	if (type == 1)
-		scc::v4g1foldept = (ngfailround + ngtrendround) * (4 * anfsrate + 0.1 * anfsrate * (scc::stamina + scc::power + scc::willp + scc::wit)) - 4 * (ngfailround + ngtrendround);
+		scc::v3g2foldept = (ngfailround + ngtrendround) * (4 * anfsrate + 0.1 * anfsrate * (scc::stamina + scc::power + scc::willp + scc::wit)) - 4 * (ngfailround + ngtrendround);
 	else if (type == 2)
-		scc::v4g1foldept = (ngfailround + ngtrendround) * (4 * anfsrate + 0.1 * anfsrate * (scc::speed + scc::power + scc::willp + scc::wit)) - 4 * (ngfailround + ngtrendround);
+		scc::v3g2foldept = (ngfailround + ngtrendround) * (4 * anfsrate + 0.1 * anfsrate * (scc::speed + scc::power + scc::willp + scc::wit)) - 4 * (ngfailround + ngtrendround);
 	else if (type == 3)
-		scc::v4g1foldept = (ngfailround + ngtrendround) * (4 * anfsrate + 0.1 * anfsrate * (scc::speed + scc::stamina + scc::willp + scc::wit)) - 4 * (ngfailround + ngtrendround);
+		scc::v3g2foldept = (ngfailround + ngtrendround) * (4 * anfsrate + 0.1 * anfsrate * (scc::speed + scc::stamina + scc::willp + scc::wit)) - 4 * (ngfailround + ngtrendround);
 	else if (type == 4)
-		scc::v4g1foldept = (ngfailround + ngtrendround) * (4 * anfsrate + 0.1 * anfsrate * (scc::speed + scc::stamina + scc::power + scc::wit)) - 4 * (ngfailround + ngtrendround);
+		scc::v3g2foldept = (ngfailround + ngtrendround) * (4 * anfsrate + 0.1 * anfsrate * (scc::speed + scc::stamina + scc::power + scc::wit)) - 4 * (ngfailround + ngtrendround);
 	else if (type == 5)
-		scc::v4g1foldept = (ngfailround + ngtrendround) * (4 * anfsrate + 0.1 * anfsrate * (scc::speed + scc::stamina + scc::willp + scc::power)) - 4 * (ngfailround + ngtrendround);
-	//v4g1spept
-	scc::v4g1spept = gfailround * (afsrate + afsrate * 0.1 * scc::sp) + (actualround - gfailround) * (anfsrate + anfsrate * 0.1 * scc::sp) - actualround;
+		scc::v3g2foldept = (ngfailround + ngtrendround) * (4 * anfsrate + 0.1 * anfsrate * (scc::speed + scc::stamina + scc::willp + scc::power)) - 4 * (ngfailround + ngtrendround);
+	//v3g2spept
+	scc::v3g2spept = gfailround * (afsrate + afsrate * 0.1 * scc::sp) + (actualround - gfailround) * (anfsrate + anfsrate * 0.1 * scc::sp) - actualround;
 	return 0;
 }
 
@@ -442,13 +464,6 @@ bool scc::EvalV2()
 	}
 	
 }
-
-
-
-class discc : public scc
-{
-	;
-};
 
 
 
