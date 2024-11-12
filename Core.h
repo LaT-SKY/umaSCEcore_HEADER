@@ -204,25 +204,21 @@ int scc::Report(string ty)
 		{
 			return sp;
 		}
-		else if (type == "v3g1ept")
+		else if (ty == "v3g1ept")
 		{
-			scc::v3g1ept = num;
-			return 0;
+			return v3g1ept;
 		}
-		else if (type == "v3g2mainept")
+		else if (ty == "v3g2mainept")
 		{
-			scc::v3g2mainept = num;
-			return 0;
+			return v3g2mainept;
 		}
-		else if (type == "v3g2foldept")
+		else if (ty == "v3g2foldept")
 		{
-			scc::v3g2foldept = num;
-			return 0;
+			return v3g2foldept;
 		}
-		else if (type == "v3g2spept")
+		else if (ty == "v3g2spept")
 		{
-			scc::v3g2spept = num;
-			return 0;
+			return v3g2spept;
 		}
 
 	}
