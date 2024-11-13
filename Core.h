@@ -5,12 +5,21 @@
 
 #include <string>
 #include <iostream>
+#include<math.h>
 
 using namespace std;
 using std::string;
 
 class scc
 {
+private:
+	struct diset
+	{
+		int abex[5];
+		int p[5];
+		double r[5];
+	}di{};
+
 protected:
 	int type, fs, sfs, dr, tr, gatr, trap, speed, stamina, power, willp, wit, sp;
 	int v3g2mainept, v3g2foldept, v3g2spept;
@@ -32,7 +41,7 @@ public:
 	bool EvalV3G1();
 	bool EvalV2();
 	bool EvalDiG1();
-	bool EvalV4G1();
+
 
 };
 
@@ -457,6 +466,35 @@ bool scc::EvalV2()
 	else
 	{
 		return 1;
+	}
+	
+} 
+
+bool scc::EvalDiG1()
+{
+	scc::EvalV3G2();
+	scc temp{};
+	int afs = ((fs * 0.01 + 1) * (sfs * 0.01 + 1) - 1) * 100;
+	int arrv[5]{ afs,dr,tr,gatr,trap };
+	for (int i = 0; i < 5; i++)
+	{
+		di.r[i] = cos(arrv[i] * 0.5 * sqrt(di.abex[i] * di.abex[i] * di.p[i] * 0.01));
+		temp.type = type;
+		temp.fs = afs*di.r[0];
+		temp.dr = dr;
+		temp.tr = tr;
+		temp.gatr = gatr;
+		temp.trap = trap;
+		temp.speed = speed;
+		temp.stamina = stamina;
+		temp.power = power;
+		temp.willp = willp;
+		temp.wit = wit;
+		temp.sp = sp;
+		temp.EvalV3G2();
+		v3g2mainept -= temp.v3g2mainept;
+		v3g2spept -= temp.v3g2spept;
+		v3g2foldept -= temp.v3g2foldept;
 	}
 	
 }
