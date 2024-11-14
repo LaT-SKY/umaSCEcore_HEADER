@@ -19,6 +19,16 @@ private:
 		int p[5];
 		double r[5];
 	}di{};
+	//
+	struct v4g1data
+	{
+		int mainept[2];
+		int foldept[2];
+		int spept[2];
+		int click[5];
+	};
+	int nowtrap;
+	int nowpos;
 
 protected:
 	int type, fs, sfs, dr, tr, gatr, trap, speed, stamina, power, willp, wit, sp;
@@ -26,6 +36,8 @@ protected:
 	double v3g1ept, v2ept;
 
 	bool isdi;
+
+	v4g1data v4g1{};
 
 public:
 	bool Scan(int, int, int, int, int, int, int, int, int, int, int, int, int);
@@ -41,7 +53,7 @@ public:
 	bool EvalV3G1();
 	bool EvalV2();
 	bool EvalDiG1();
-
+	bool EvalV4G1(bool,bool,int);
 
 };
 
@@ -496,10 +508,43 @@ bool scc::EvalDiG1()
 		v3g2spept -= temp.v3g2spept;
 		v3g2foldept -= temp.v3g2foldept;
 	}
-	
+	return 0;
 }
 
-
+bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
+{
+	scc card[6]{};
+	scc::Copy(card[0]);
+	if (card[0].type == 4)
+	{
+		iswillp = 1;
+	}
+	if (iswillp)
+	{
+		switch (card[0].type)
+		{
+		case 1:card[1].type = 1; card[2].type = 3; card[3].type = 4; card[4].type = 5; card[5].type = 5; break;
+		case 2:card[1].type = 1; card[2].type = 1; card[3].type = 4; card[4].type = 5; card[5].type = 5; break;
+		case 3:card[1].type = 1; card[2].type = 1; card[3].type = 4; card[4].type = 5; card[5].type = 5; break;
+		case 4:break;
+		case 5:break;
+		default:cout << "´íÎó\n";
+		}
+	}
+	else
+	{
+		;
+	}
+	int round = 72;
+	bool isjunior = 0;
+	bool ismedial = 1;
+	int nval[6]{0};
+	int oval[6]{ 800,500,500,500,600,0 };
+	for (int i = 1; i < 6; i++)
+	{
+		card[i].fs = 25;
+	}
+}
 
 #endif
 
