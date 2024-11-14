@@ -539,11 +539,55 @@ bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 	bool isjunior = 0;
 	bool ismedial = 1;
 	int nval[6]{0};
-	int oval[6]{ 800,500,500,500,600,0 };
+	int oval[5]{ 800,500,500,500,600};
 	for (int i = 1; i < 6; i++)
 	{
 		card[i].fs = 25;
+		card[i].dr = 30;
+		card[i].tr = 10;
+		card[i].gatr = 50;		
+		card[i].trap = 20;
+		card[i].sp = 1;
+		card[i].nowpos = 6;
+		card[i].sfs = 0;
 	}
+	struct positioninfo
+	{
+		int clickpt;
+		int pospt;
+		int insdr;
+		int instr;
+		float insfsrate;
+		int insnum;
+		int insbonus;
+		int scale;
+		int lscale;
+		int click;
+	};
+	positioninfo posinfo[6]{0};
+	for (int i = 0; i < 6; i++)
+	{
+		posinfo[i].insfsrate = 1;
+		posinfo[i].lscale = 6;
+		posinfo[i].scale = 10;
+		if (i == 3)
+		{
+			posinfo[i].lscale = 3;
+		}
+	}
+	posinfo[6].lscale = 3;
+	posinfo[6].insbonus = 0;
+	float c114 = (100 + scc::gatr);
+	float d114 = (550 + scc::gatr);
+	float gat = c114 / d114;
+	float e114 = (550 + scc::gatr);
+	float ngat = 100 / e114;
+	const int mgatp = gat * 10000;
+	const int mngatp = mgatp + ngat * 40000;
+	const int gatp = 2500;
+	const int ngatp = 9166;
+	const int send = time(NULL);
+	srand(send);
 }
 
 #endif
