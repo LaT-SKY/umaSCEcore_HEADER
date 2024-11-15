@@ -588,6 +588,7 @@ bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 	const int ngatp = 9166;
 	const int send = time(NULL);
 	srand(send);
+	return 0;
 }
 
 #endif
