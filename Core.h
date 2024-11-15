@@ -538,14 +538,14 @@ bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 	int round = 72;
 	bool isjunior = 0;
 	bool ismedial = 1;
-	int nval[6]{0};
-	int oval[5]{ 800,500,500,500,600};
+	int nval[6]{ 0 };
+	int oval[5]{ 800,500,500,500,600 };
 	for (int i = 1; i < 6; i++)
 	{
 		card[i].fs = 25;
 		card[i].dr = 30;
 		card[i].tr = 10;
-		card[i].gatr = 50;		
+		card[i].gatr = 50;
 		card[i].trap = 20;
 		card[i].sp = 1;
 		card[i].nowpos = 6;
@@ -564,7 +564,7 @@ bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 		int lscale;
 		int click;
 	};
-	positioninfo posinfo[6]{0};
+	positioninfo posinfo[6]{ 0 };
 	for (int i = 0; i < 6; i++)
 	{
 		posinfo[i].insfsrate = 1;
@@ -575,8 +575,8 @@ bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 			posinfo[i].lscale = 3;
 		}
 	}
-	posinfo[6].lscale = 3;
-	posinfo[6].insbonus = 0;
+	posinfo[5].lscale = 3;
+	posinfo[5].insbonus = 0;
 	float c114 = (100 + scc::gatr);
 	float d114 = (550 + scc::gatr);
 	float gat = c114 / d114;
@@ -586,8 +586,83 @@ bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 	const int mngatp = mgatp + ngat * 40000;
 	const int gatp = 2500;
 	const int ngatp = 9166;
-	const int send = time(NULL);
+	int send = time(NULL);
 	srand(send);
+	for (int asdfghjkl = 0; asdfghjkl < dozen; asdfghjkl++)
+	{
+		if (isReport)
+		{
+			;
+		}
+		while (round > 0)
+		{
+			send += asdfghjkl;
+			srand(send + rand() % send);
+			for (int i = 1; i < 6; i++)
+			{
+				int num = rand() % 999 + 1;
+				if (num < gatp + 1)
+				{
+					card[i].nowpos = card[i].type - 1;
+				}
+				else if (num > gatp + 1 && num < ngatp + 1)
+				{
+					num = rand() % 3;
+					switch (card[i].type)
+					{
+					case 1:
+						switch (num)
+						{
+						case 0:card[i].nowpos = 1; break;
+						case 1:card[i].nowpos = 2; break;
+						case 2:card[i].nowpos = 3; break;
+						case 3:card[i].nowpos = 4; break;
+						}
+						break;
+					case 2:
+						;
+					}
+				}
+				else if(num>ngatp+1)
+				{
+					card[i].nowpos = 5;
+				}
+				int num = rand() % 999 + 1;
+				if (num < mgatp + 1)
+				{
+					card[0].nowpos = card[0].type - 1;
+				}
+				else if (num > mgatp + 1 && num < mngatp + 1)
+				{
+					num = rand() % 3;
+					switch (card[0].type)
+					{
+					case 0:;
+					}
+				}
+				else if (num > mngatp + 1)
+				{
+					card[0].nowpos = 5;
+				}
+			}//for ending
+			for (int i = 0; i < 6; i++)
+			{
+				for (int m = 0; m < 7; m++)
+				{
+					if (card[m].nowpos == i)
+					{
+						if (card[m].nowtrap > 79)
+						{
+							posinfo[i].insfsrate *= (card[m].fs * 0.01 + 1) * (card[m].sfs * 0.01 + 1);
+						}
+					}
+				}
+			}
+		}
+	}
+
+
+
 	return 0;
 }
 
