@@ -645,9 +645,9 @@ bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 					card[0].nowpos = 5;
 				}
 			}//for ending
-			for (int i = 0; i < 6; i++)
+			for (int i = 0; i < 5; i++)
 			{
-				for (int m = 0; m < 7; m++)
+				for (int m = 0; m < 6; m++)
 				{
 					if (card[m].nowpos == i)
 					{
@@ -655,10 +655,25 @@ bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 						{
 							posinfo[i].insfsrate *= (card[m].fs * 0.01 + 1) * (card[m].sfs * 0.01 + 1);
 						}
+						posinfo[i].insdr += card[m].dr;
+						posinfo[i].instr += card[m].tr;
+						posinfo[m].insnum++;
+						if (m == 0 && card[0].nowpos == i)
+						{
+							switch (i)
+							{
+							case 0:posinfo[0].insbonus = card[0].speed; break;
+							case 1:break;
+							}
+						}
 					}
 				}
 			}
-		}
+			for (int i = 0; i < 5; i++)
+			{
+				posinfo[i].pospt = (posinfo[i].scale);
+			}
+		}//wile ending
 	}
 
 
