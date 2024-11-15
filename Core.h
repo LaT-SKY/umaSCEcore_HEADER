@@ -627,7 +627,7 @@ bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 				{
 					card[i].nowpos = 5;
 				}
-				//num = rand() % 999 + 1;
+				num = rand() % 999 + 1;
 				if (num < mgatp + 1)
 				{
 					card[0].nowpos = card[0].type - 1;
