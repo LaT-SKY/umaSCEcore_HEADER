@@ -29,6 +29,19 @@ private:
 	};
 	int nowtrap;
 	int nowpos;
+	struct tempposinfo
+	{
+		int tpt;
+		int index;
+	}t[5]{ 0 };
+	void ex(int a, int b)
+	{
+		int c;
+		c = a;
+		a = b;
+		b = c;
+	};
+
 
 protected:
 	int type, fs, sfs, dr, tr, gatr, trap, speed, stamina, power, willp, wit, sp;
@@ -671,9 +684,80 @@ bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 			}
 			for (int i = 0; i < 5; i++)
 			{
-				posinfo[i].pospt = (posinfo[i].scale);
+				posinfo[i].pospt = (posinfo[i].scale + posinfo[i].insbonus) * posinfo[i].insfsrate * (posinfo[i].insdr * 0.002 + 1) * (posinfo[i].instr * 0.01 + 1) * (posinfo[i].insnum * 0.05 + 1);
 			}
-		}//wile ending
+			if (isjunior)
+			{
+				for (int i = 0; i < 6; i++)
+				{
+					if (card[i].nowtrap < 80)
+					{
+						posinfo[card[i].nowpos].clickpt += 2;
+					}
+					else
+					{
+						posinfo[card[i].nowpos].clickpt += 1;
+					}
+				}
+			}
+			else if(ismedial)
+			{
+				for (int i = 0; i < 5; i++)
+				{
+					t[i].tpt = posinfo[i].pospt;
+					t[i].index = i;
+				}
+				int temppt = t[0].tpt;
+				for (int m = 0; m < 4; m++)
+				{
+					for (int i = 0; i < 4; i++)
+					{
+						if(temppt>t[i+1].tpt)
+						{
+							ex(t[i].tpt, t[i + 1].tpt);
+							ex(t[i].index, t[i + 1].index);
+							temppt = t[i + 1].tpt;
+						}
+					}
+					temppt = t[0].tpt;
+				}
+				for (int i = 0; i < 5; i++)
+				{
+					posinfo[t[i].index].clickpt += i;
+				}
+				for (int i = 0; i < 5; i++)
+				{
+					oval[i] -= nval[i];
+					t[i].tpt = oval[i];
+					t[i].index = i;
+				}
+				int temppt = t[0].tpt;
+				for (int m = 0; m < 4; m++)
+				{
+					for (int i = 0; i < 4; i++)
+					{
+						if (temppt > t[i + 1].tpt)
+						{
+							ex(t[i].tpt, t[i + 1].tpt);
+							ex(t[i].index, t[i + 1].index);
+							temppt = t[i + 1].tpt;
+						}
+					}
+					temppt = t[0].tpt;
+				}
+				for (int i = 0; i < 5; i++)
+				{
+					posinfo[t[i].index].clickpt += i;
+				}
+
+
+			}//ismedial ending;
+			else
+			{
+				//
+			}
+
+		}//while ending
 	}
 
 
