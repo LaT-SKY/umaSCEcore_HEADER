@@ -339,7 +339,7 @@ bool scc::Exchange(scc opt)
 
 bool scc::EvalV3G2()
 {
-	//½«int×ª»»Îªfloat
+	//å°†intè½¬æ¢ä¸ºfloat
 	float a = (1 + 0.01 * scc::fs);
 	float b = (1 + 0.01 * scc::sfs);
 	float fsrate = a * b;
@@ -347,7 +347,7 @@ bool scc::EvalV3G2()
 	float trrate = 1 + 0.01 * scc::tr;
 	//end
 
-	//µÃÒâÂÊ¼ÆËã
+	//å¾—æ„ç‡è®¡ç®—
 	float c = (100 + scc::gatr);
 	float d = (550 + scc::gatr);
 	float gat = c / d;
@@ -357,36 +357,36 @@ bool scc::EvalV3G2()
 	float eht = 50 / f;
 	//end
 
-	//¼ÆËãÊ§Ğ§ÂÊ
+	//è®¡ç®—å¤±æ•ˆç‡
 	float x = (80 - scc::trap) / 5;
 	if (x != int(x))
 		if (x > int(x))
 			x = 1 + int(x);
 		else
 			x = int(x);
-	//Todo :ÏòÉÏÈ¡Õû
+	//Todo :å‘ä¸Šå–æ•´
 	//end
-	float fht = x / 72;//Ê§Ğ§ÂÊ
+	float fht = x / 72;//å¤±æ•ˆç‡
 	//end
 
-	//Óë»ØºÏÏà¹ØµÄ¼ÆËã
-	//Êµ¼ÊÑµÁ·»ØºÏ
+	//ä¸å›åˆç›¸å…³çš„è®¡ç®—
+	//å®é™…è®­ç»ƒå›åˆ
 	int actualround = 10000 - 10000 * eht;
-	//Ê§Ğ§»Ø
+	//å¤±æ•ˆå›
 	int failround = actualround * fht;
-	//ÓÑÇéÑµÁ·Ç÷ÊÆ»ØºÏ
+	//å‹æƒ…è®­ç»ƒè¶‹åŠ¿å›åˆ
 	int trendround = actualround - failround;
 	//end
 
-	//ÔÓÏî
-	//²»º¬ÓÑÇé¼Ó³ÉµÄÑµÁ·±¶ÂÊ
+	//æ‚é¡¹
+	//ä¸å«å‹æƒ…åŠ æˆçš„è®­ç»ƒå€ç‡
 	float anfsrate = drrate * trrate;
-	//°üº¬ÓÑÇé¡®s
+	//åŒ…å«å‹æƒ…â€˜s
 	float afsrate = fsrate * drrate * trrate;
-	//Ê§Ğ§»Ø
+	//å¤±æ•ˆå›
 	int ngfailround = failround * ngat;
 	int gfailround = failround * gat;
-	//Ç÷ÊÆ»Ø
+	//è¶‹åŠ¿å›
 	int ngtrendround = trendround * ngat;
 	int gtrendround = trendround * gat;
 	//end
@@ -420,7 +420,7 @@ bool scc::EvalV3G2()
 
 bool scc::EvalV3G1()
 {
-	//½«int×ª»»Îªfloat
+	//å°†intè½¬æ¢ä¸ºfloat
 	float a = (1 + 0.01 * scc::fs);
 	float b = (1 + 0.01 * scc::sfs);
 	float fsrate = a * b;
@@ -428,7 +428,7 @@ bool scc::EvalV3G1()
 	float trrate = 1 + 0.01 * scc::tr;
 	//end
 
-	//µÃÒâÂÊ¼ÆËã
+	//å¾—æ„ç‡è®¡ç®—
 	float c = (100 + scc::gatr);
 	float d = (550 + scc::gatr);
 	float gat = c / d;
@@ -438,10 +438,10 @@ bool scc::EvalV3G1()
 	float eht = 50 / f;
 	//end
 
-	//ÔÓÏî
-	//²»º¬ÓÑÇé¼Ó³ÉµÄÑµÁ·±¶ÂÊ
+	//æ‚é¡¹
+	//ä¸å«å‹æƒ…åŠ æˆçš„è®­ç»ƒå€ç‡
 	float anfsrate = drrate * trrate;
-	//°üº¬ÓÑÇé¡®s
+	//åŒ…å«å‹æƒ…â€˜s
 	float afsrate = fsrate * drrate * trrate;
 
 	if (type == 1)
@@ -541,7 +541,7 @@ bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 		case 3:card[1].type = 1; card[2].type = 1; card[3].type = 4; card[4].type = 5; card[5].type = 5; break;
 		case 4:break;
 		case 5:break;
-		default:cout << "´íÎó\n";
+		default:cout << "é”™è¯¯\n";
 		}
 	}
 	else
@@ -731,7 +731,7 @@ bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 					t[i].tpt = oval[i];
 					t[i].index = i;
 				}
-				int temppt = t[0].tpt;
+				temppt = t[0].tpt;
 				for (int m = 0; m < 4; m++)
 				{
 					for (int i = 0; i < 4; i++)
@@ -754,10 +754,180 @@ bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 			}//ismedial ending;
 			else
 			{
-				//
+				struct tempposinfo
+				{
+					int tpt;
+					int index;
+				}t[5]{0};
+				for (int i=0;i<5;i++)
+				{
+					t[i].tpt=posinfo[i].pospt;
+					t[i].index=i;
+				}
+				int temppt = t[0].tpt;
+				for(int m=0;m<5;m++)
+				{
+					for(int i=0;i<4;i++)
+					{
+						if (temppt>t[i+1].tpt)
+						{
+							ex(t[i].tpt,t[i+1].tpt);
+							ex(t[i].index,t[i+1].index);
+							temppt = t[i+1].tpt;
+						}
+					}
+					temppt = t[0].tpt;
+				}
+				for (int i=0;i<5;i++)
+				{
+					posinfo[t[i].index].click += i;
+				}
 			}
-
+		//æ¨¡æ‹Ÿç‚¹å‡»
+		int num =0;
+		int temppt =posinfo[0].clickpt;
+		for (int i=0;i<5;i++)
+		{
+			if (temppt<posinfo[i+1].clickpt)
+			{
+				num = i+1;
+				temppt = posinfo[i+1].clickpt;
+			}
+		}//ä»¥ä¸Šä»£ç ç¡®è®¤äº†ç‚¹å‡»å“ªä¸€ä¸ªåœºåœ°ï¼Œä»¥ä¸‹çš„ä»£ç å†³å®šå‰¯è®­ç»ƒçš„å±æ€§åˆ†ä»¥åŠspçš„å±æ€§åˆ†
+		nval[num] += posinfo[num].pospt;
+		int z =posinfo[num].insfsrate * (posinfo[num].insdr * 0.002 + 1) * (posinfo[num].instr * 0.01 + 1) * (posinfo[num].insnum * 0.05 + 1);
+		if (card[0].nowpos == num)
+		{
+			switch (num)
+			{
+			case 0:nval[2] += (posinfo[num].lscale + card[0].power) * z; break;
+			case 1:break;
+			}
+		}
+		for (int i = 0; i < 6; i++)
+		{
+			if (card[i].nowpos == num)
+			{
+				posinfo[5].insbonus += card[i].sp;
+			}
+		}
+		if (num == 4)
+		{
+			nval[5] += (posinfo[5].scale + posinfo[5].insbonus) * z;
+		}
+		else
+		{
+			nval[5] += (posinfo[5].lscale + posinfo[5].insbonus) * z;
+		}
+		for (int i = 0; i < 6; i++)
+		{
+			if (card[i].nowpos == num)
+			{
+				card[i].nowtrap += 5;
+			}
+		}
+		posinfo[num].click++;
+		//æ”¶å°¾å·¥ä½œ
+		//å¤ä½Så¡ä¸è®­ç»ƒåœº
+		for (int i = 0; i < 6; i++)
+		{
+			posinfo[i].clickpt = 0;
+			posinfo[i].pospt = 0;
+			posinfo[i].insdr = 0;
+			posinfo[i].instr = 0;
+			posinfo[i].insbonus = 0;
+			posinfo[i].insfsrate = 0;
+			posinfo[i].insnum = 0;
+		}
+		for (int i = 0; i < 6; i++)
+		{
+			card[i].nowpos = 5;
+		}
+		oval[0] = 800;
+		oval[0] = 500;
+		oval[0] = 500;
+		oval[0] = 500;
+		oval[0] = 600;
+		//åˆ¤æ–­è®­ç»ƒåœºå‡çº§
+		for (int i = 0; i < 6; i++)
+		{
+			if (posinfo[i].click = 5)
+			{
+				posinfo[i].scale++;
+				posinfo[i].lscale++;
+			}
+			if (posinfo[i].click = 10)
+			{
+				posinfo[i].scale++;
+				posinfo[i].lscale++;
+			}
+			if (posinfo[i].click = 15)
+			{
+				posinfo[i].scale++;
+				posinfo[i].lscale++;
+			}
+			if (posinfo[i].click = 20)
+			{
+				posinfo[i].scale++;
+				posinfo[i].lscale++;
+			}
+		}
+		//é˜¶æ®µåˆ¤æ–­
+		num = 0;
+		for (int i = 0; i < 6;i++)
+		{
+			if (card[i].nowtrap > 79)
+			{
+				num++;
+			}
+		}
+		if (num > 4 || round < 50)
+		{
+			isjunior = false;
+			ismedial = true;
+		}
+		num = 0;
+		if (nval[0] > 799)
+		{
+			num++;
+		}
+		if (!iswillp&&nval[1] > 499)
+		{
+			num++;
+		}
+		if (nval[2] > 499)
+		{
+			num++;
+		}
+		if (iswillp&&nval[3] > 499)
+		{
+			num++;
+		}
+		if (nval[4] > 599)
+		{
+			num++;
+		}
+		if (num > 3)
+		{
+			ismedial = false;
+		}
+		round--;
 		}//while ending
+		//è‚²æˆç»“æŸã€‚æ”¶é›†æ•°æ®
+		switch (card[0].type)
+		{
+		case 1:
+		{
+			v4g1.mainept[1] = nval[0];
+			v4g1.foldept[1] = nval[1] + nval[2] + nval[3] + nval[4];
+		}
+		case 1:
+		{
+			v4g1.mainept[1] = nval[0];
+			v4g1.foldept[1] = nval[1] + nval[2] + nval[3] + nval[4];
+		}
+
+		}
 	}
 
 
