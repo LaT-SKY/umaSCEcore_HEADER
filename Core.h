@@ -48,6 +48,7 @@ protected:
 	int type, fs, sfs, dr, tr, gatr, trap, speed, stamina, power, willp, wit, sp;
 	int v3g2mainept, v3g2foldept, v3g2spept;
 	double v3g1ept, v2ept;
+	int v4g1mainept; int v4g1foldept; int v4g1spept;
 
 	bool isdi;
 
@@ -300,6 +301,9 @@ bool scc::Copy(scc opt)
 		opt.sp = scc::sp;
 		opt.v3g1ept = scc::v3g1ept;
 		opt.v2ept = scc::v2ept;
+		//cout << "done";
+		//cout << opt.type;
+		//cin.get();
 		return 0;
 	}
 	catch (std::exception& e)
@@ -553,10 +557,15 @@ bool scc::EvalDiG1()
 
 bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 {
-	if (isReport) cout << "\n正在创建支援卡......";
+	if (isReport) cout << "\nCreating SupportCards......";
 	scc card[6]{};
-	if (isReport) cout << "\n正在分配支援卡属性......";
+	if (isReport) cout << "Done!";
+	if (isReport) cout << "\nHanging out value......";
 	scc::Copy(card[0]);
+	card[0].type = scc::type;
+	//card[0].type = 1;
+	//cout << card[0].type;
+	//cin.get();
 	if (card[0].type == 4)
 	{
 		iswillp = 1;
@@ -583,8 +592,10 @@ bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 		case 5:card[1].type = 1; card[2].type = 1; card[3].type = 2; card[4].type = 3; card[5].type = 5; break;
 		}
 	}
-	if (isReport) cout << "\n正在布置环境......";
-	int round = 72;
+	cout << card[1].type;
+	cin.get();
+	if (isReport) cout << "\nFormating setting......";
+	int round = 1;
 	bool isjunior = 0;
 	bool ismedial = 1;
 	int nval[6]{ 0 };
@@ -635,16 +646,18 @@ bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 	const int mngatp = mgatp + ngat * 40000;
 	const int gatp = 2500;
 	const int ngatp = 9166;
+	if (isReport) cout << "\nGeting seed......";
 	int seed = time(NULL);
 	srand(seed);
 	for (int asdfghjkl = 0; asdfghjkl < dozen; asdfghjkl++)
 	{
-		if (isReport) cout << "\n进入循环 （ " << asdfghjkl << " / " << dozen << " ） ......";
-		while (round > 0)
+		if (isReport) cout << "\nEvaluating V4G1......" << asdfghjkl << " / " << dozen << " ......";
+		while (round < 73)
 		{
-			if (isReport) cout << "\n回合 （ " << round << " / " << "72" << " ） ......";
+			if (isReport) cout << "\n  Round......" << round << " / " << "72";
 			seed += asdfghjkl;
 			srand(seed + rand() % seed);
+			if (isReport) cout << "\n    Hanging out stage......";
 			for (int i = 1; i < 6; i++)
 			{
 				int num = rand() % 999 + 1;
@@ -766,6 +779,7 @@ bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 					card[0].nowpos = 5;
 				}
 			}//for ending
+			if (isReport) cout << "\n    Hanging out information......";
 			for (int i = 0; i < 5; i++)
 			{
 				for (int m = 0; m < 6; m++)
@@ -793,6 +807,7 @@ bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 					}
 				}
 			}
+			if (isReport) cout << "\n    Calculating clickpt......";
 			for (int i = 0; i < 5; i++)
 			{
 				posinfo[i].pospt = (posinfo[i].scale + posinfo[i].insbonus) * posinfo[i].insfsrate * (posinfo[i].insdr * 0.002 + 1) * (posinfo[i].instr * 0.01 + 1) * (posinfo[i].insnum * 0.05 + 1);
@@ -895,6 +910,7 @@ bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 				}
 			}
 		//模拟点击
+		if (isReport) cout << "\n    Clickdown......";
 		int num =0;
 		int temppt =posinfo[0].clickpt;
 		for (int i=0;i<5;i++)
@@ -943,6 +959,7 @@ bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 		posinfo[num].click++;
 		//收尾工作
 		//复位S卡与训练场
+		if (isReport) cout << "\n    Formating stage......";
 		for (int i = 0; i < 6; i++)
 		{
 			posinfo[i].clickpt = 0;
@@ -963,6 +980,7 @@ bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 		oval[0] = 500;
 		oval[0] = 600;
 		//判断训练场升级
+		if (isReport) cout << "\n    Checking upgrade......";
 		for (int i = 0; i < 6; i++)
 		{
 			if (posinfo[i].click = 5)
@@ -987,6 +1005,7 @@ bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 			}
 		}
 		//阶段判断
+		if (isReport) cout << "\n    Tiding lastly......";
 		num = 0;
 		for (int i = 0; i < 6;i++)
 		{
@@ -1025,15 +1044,21 @@ bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 		{
 			ismedial = false;
 		}
-		round--;
+		round++;
 		}//while ending
 		//育成结束。收集数据
+		round = 1;
+		if (isReport) cout << "\n  Collecting data......";
+		//cout << card[2].type;
+		//cout << card[0].speed;
+		//cout << scc::type;
 		switch (card[0].type)
 		{
 		case 1:
 		{
 			v4g1.mainept[0] = nval[0];
 			v4g1.foldept[0] = nval[1] + nval[2] + nval[3] + nval[4];
+			//cout << v4g1.foldept;
 		}
 		case 2:
 		{
@@ -1061,6 +1086,7 @@ bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 			v4g1.click[i] += posinfo[i].click;
 		}
 		v4g1.spept[0] = nval[5];
+		if (isReport) cout << "\n  Analysing data......";
 		v4g1.mainept[1] = (v4g1.mainept[0] + v4g1.mainept[1]) * 0.5;
 		v4g1.foldept[1] = (v4g1.foldept[0] + (v4g1.foldept[1]*0.25)) * 0.5;
 		v4g1.spept[1] = (v4g1.spept[0] + v4g1.spept[1]) * 0.5;
@@ -1072,6 +1098,7 @@ bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 	v4g1mainept = v4g1.mainept[0];
 	v4g1foldept = v4g1.foldept[0];
 	v4g1spept = v4g1.spept[0];
+	if (isReport) cout << "\nEvaluating V4G1......Done!";
 	return 0;
 }
 
