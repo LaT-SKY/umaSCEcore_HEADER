@@ -27,6 +27,7 @@ private:
 		int spept[2];
 		int click[5];
 	};
+	v4g1data v4g1{};
 	int nowtrap;
 	int nowpos;
 	struct tempposinfo
@@ -50,7 +51,6 @@ protected:
 
 	bool isdi;
 
-	v4g1data v4g1{};
 
 public:
 	bool Scan(int, int, int, int, int, int, int, int, int, int, int, int, int);
@@ -97,11 +97,19 @@ bool scc::Scan(int type, int fs, int sfs, int dr, int tr, int gatr, int trap, in
 
 bool scc::Clear(int type, int fs, int sfs, int dr, int tr, int gatr, int trap, int speed, int stamina, int power, int willp, int wit, int sp, int v3g2mainept, int v3g2foldept, int v3g2spept, double v3g1ept, double v2ept)
 {
-	scc::type = 0; scc::fs = 0; scc::sfs = 0; scc::dr = 0; scc::tr = 0; scc::gatr = 0; scc::trap = 0; scc::speed = 0; scc::stamina = 0; scc::power = 0; scc::willp = 0; scc::wit = 0; scc::sp = 0;
-	scc::v3g2mainept = 0; scc::v3g2foldept = 0; scc::v3g2spept = 0;
-	scc::v3g1ept = 0;
-	scc::v2ept = 0;
-	return 0;
+	try
+	{
+		scc::type = 0; scc::fs = 0; scc::sfs = 0; scc::dr = 0; scc::tr = 0; scc::gatr = 0; scc::trap = 0; scc::speed = 0; scc::stamina = 0; scc::power = 0; scc::willp = 0; scc::wit = 0; scc::sp = 0;
+		scc::v3g2mainept = 0; scc::v3g2foldept = 0; scc::v3g2spept = 0;
+		scc::v3g1ept = 0;
+		scc::v2ept = 0;
+		return 0;
+
+	}
+	catch(std::exception & e)
+	{
+		return 1;
+	}
 }
 
 bool scc::Get(string type)
@@ -254,7 +262,18 @@ int scc::Report(string ty)
 		{
 			return v3g2spept;
 		}
-
+		else if (ty == "v4g1spept")
+		{
+			return v4g1spept;
+		}
+		else if (ty == "v4g1foldept")
+		{
+			return v4g1foldept;
+		}
+		else if (ty == "v4g1mainept")
+		{
+			return v4g1mainept;
+		}
 	}
 	catch (std::exception& e)
 	{
@@ -497,8 +516,16 @@ bool scc::EvalV2()
 
 bool scc::EvalDiG1()
 {
-	scc::EvalV3G2();
+	//new
 	scc temp{};
+	try
+	{
+		scc::EvalV3G2();
+	}
+	catch (std::exception& e)
+	{
+		return 1;
+	}
 	int afs = ((fs * 0.01 + 1) * (sfs * 0.01 + 1) - 1) * 100;
 	int arrv[5]{ afs,dr,tr,gatr,trap };
 	for (int i = 0; i < 5; i++)
@@ -526,7 +553,9 @@ bool scc::EvalDiG1()
 
 bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 {
+	if (isReport) cout << "\n正在创建支援卡......";
 	scc card[6]{};
+	if (isReport) cout << "\n正在分配支援卡属性......";
 	scc::Copy(card[0]);
 	if (card[0].type == 4)
 	{
@@ -539,15 +568,22 @@ bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 		case 1:card[1].type = 1; card[2].type = 3; card[3].type = 4; card[4].type = 5; card[5].type = 5; break;
 		case 2:card[1].type = 1; card[2].type = 1; card[3].type = 4; card[4].type = 5; card[5].type = 5; break;
 		case 3:card[1].type = 1; card[2].type = 1; card[3].type = 4; card[4].type = 5; card[5].type = 5; break;
-		case 4:break;
-		case 5:break;
-		default:cout << "错误\n";
+		case 4:card[1].type = 1; card[2].type = 1; card[3].type = 3; card[4].type = 5; card[5].type = 5; break;
+		case 5:card[1].type = 1; card[2].type = 1; card[3].type = 4; card[4].type = 3; card[5].type = 5; break;
 		}
 	}
 	else
 	{
-		;
+		switch (card[0].type)
+		{
+		case 1:card[1].type = 1; card[2].type = 3; card[3].type = 2; card[4].type = 5; card[5].type = 5; break;
+		case 2:card[1].type = 1; card[2].type = 1; card[3].type = 3; card[4].type = 5; card[5].type = 5; break;
+		case 3:card[1].type = 1; card[2].type = 1; card[3].type = 2; card[4].type = 5; card[5].type = 5; break;
+		case 4:card[1].type = 1; card[2].type = 1; card[3].type = 3; card[4].type = 5; card[5].type = 5; break;
+		case 5:card[1].type = 1; card[2].type = 1; card[3].type = 2; card[4].type = 3; card[5].type = 5; break;
+		}
 	}
+	if (isReport) cout << "\n正在布置环境......";
 	int round = 72;
 	bool isjunior = 0;
 	bool ismedial = 1;
@@ -599,18 +635,16 @@ bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 	const int mngatp = mgatp + ngat * 40000;
 	const int gatp = 2500;
 	const int ngatp = 9166;
-	int send = time(NULL);
-	srand(send);
+	int seed = time(NULL);
+	srand(seed);
 	for (int asdfghjkl = 0; asdfghjkl < dozen; asdfghjkl++)
 	{
-		if (isReport)
-		{
-			;
-		}
+		if (isReport) cout << "\n进入循环 （ " << asdfghjkl << " / " << dozen << " ） ......";
 		while (round > 0)
 		{
-			send += asdfghjkl;
-			srand(send + rand() % send);
+			if (isReport) cout << "\n回合 （ " << round << " / " << "72" << " ） ......";
+			seed += asdfghjkl;
+			srand(seed + rand() % seed);
 			for (int i = 1; i < 6; i++)
 			{
 				int num = rand() % 999 + 1;
@@ -620,10 +654,12 @@ bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 				}
 				else if (num > gatp + 1 && num < ngatp + 1)
 				{
-					num = rand() % 3;
+					num = rand() % 4;
+					//num?
 					switch (card[i].type)
 					{
 					case 1:
+					{
 						switch (num)
 						{
 						case 0:card[i].nowpos = 1; break;
@@ -632,8 +668,30 @@ bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 						case 3:card[i].nowpos = 4; break;
 						}
 						break;
+					}
 					case 2:
-						;
+					{
+						switch (num)
+						{
+						case 0:card[i].nowpos = 1; break;
+						case 1:card[i].nowpos = 1; break;
+						case 2:card[i].nowpos = 3; break;
+						case 3:card[i].nowpos = 4; break;
+						}
+						break;
+					}
+					case 3:
+					{
+						switch (num)
+						{
+						case 0:card[i].nowpos = 1; break;
+						case 1:card[i].nowpos = 1; break;
+						case 2:card[i].nowpos = 2; break;
+						case 3:card[i].nowpos = 4; break;
+						}
+						break;
+					}
+					//num?
 					}
 				}
 				else if(num>ngatp+1)
@@ -647,10 +705,60 @@ bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 				}
 				else if (num > mgatp + 1 && num < mngatp + 1)
 				{
-					num = rand() % 3;
-					switch (card[0].type)
+					num = rand() % 4;
+					//num?
+					switch (card[0].type)//次分配
 					{
-					case 0:;
+					case 1://speed
+					{
+						switch (num)
+						{
+						case 0:card[0].nowpos = 1; break;
+						case 1:card[0].nowpos = 2; break;
+						case 2:card[0].nowpos = 3; break;
+						case 3:card[0].nowpos = 4; break;
+						}
+					}
+					case 2:
+					{
+						switch (num)
+						{
+						case 0:card[0].nowpos = 0; break;
+						case 1:card[0].nowpos = 2; break;
+						case 2:card[0].nowpos = 3; break;
+						case 3:card[0].nowpos = 4; break;
+						}
+					}
+					case 3:
+					{
+						switch (num)
+						{
+						case 0:card[0].nowpos = 0; break;
+						case 1:card[0].nowpos = 1; break;
+						case 2:card[0].nowpos = 3; break;
+						case 3:card[0].nowpos = 4; break;
+						}
+					}
+					case 4:
+					{
+						switch (num)
+						{
+						case 0:card[0].nowpos = 0; break;
+						case 1:card[0].nowpos = 1; break;
+						case 2:card[0].nowpos = 2; break;
+						case 3:card[0].nowpos = 4; break;
+						}
+					}
+					case 5:
+					{
+						switch (num)
+						{
+						case 0:card[0].nowpos = 0; break;
+						case 1:card[0].nowpos = 1; break;
+						case 2:card[0].nowpos = 2; break;
+						case 3:card[0].nowpos = 3; break;
+						}
+					}
 					}
 				}
 				else if (num > mngatp + 1)
@@ -676,7 +784,10 @@ bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 							switch (i)
 							{
 							case 0:posinfo[0].insbonus = card[0].speed; break;
-							case 1:break;
+							case 1:posinfo[0].insbonus = card[0].stamina; break;
+							case 2:posinfo[0].insbonus = card[0].power; break;
+							case 3:posinfo[0].insbonus = card[0].willp; break;
+							case 4:posinfo[0].insbonus = card[0].wit; break;
 							}
 						}
 					}
@@ -801,7 +912,10 @@ bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 			switch (num)
 			{
 			case 0:nval[2] += (posinfo[num].lscale + card[0].power) * z; break;
-			case 1:break;
+			case 1:nval[3] += (posinfo[num].lscale + card[0].willp) * z; break;
+			case 2:nval[1] += (posinfo[num].lscale + card[0].stamina) * z; break;
+			case 3:nval[0] += (posinfo[num].lscale + card[0].speed) * z; nval[2] += (posinfo[num].lscale + card[0].power) * z; break;
+			case 4:nval[2] += (posinfo[num].lscale + card[0].wit) * z; break;
 			}
 		}
 		for (int i = 0; i < 6; i++)
@@ -918,20 +1032,46 @@ bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 		{
 		case 1:
 		{
-			v4g1.mainept[1] = nval[0];
-			v4g1.foldept[1] = nval[1] + nval[2] + nval[3] + nval[4];
+			v4g1.mainept[0] = nval[0];
+			v4g1.foldept[0] = nval[1] + nval[2] + nval[3] + nval[4];
 		}
-		case 1:
+		case 2:
 		{
-			v4g1.mainept[1] = nval[0];
-			v4g1.foldept[1] = nval[1] + nval[2] + nval[3] + nval[4];
+			v4g1.mainept[0] = nval[1];
+			v4g1.foldept[0] = nval[0] + nval[2] + nval[3] + nval[4];
 		}
-
+		case 3:
+		{
+			v4g1.mainept[0] = nval[2];
+			v4g1.foldept[0] = nval[0] + nval[1] + nval[3] + nval[4];
 		}
+		case 4:
+		{
+			v4g1.mainept[0] = nval[3];
+			v4g1.foldept[0] = nval[0] + nval[1] + nval[2] + nval[4];
+		}
+		case 5:
+		{
+			v4g1.mainept[0] = nval[4];
+			v4g1.foldept[0] = nval[0] + nval[1] + nval[2] + nval[3];
+		}
+		}
+		for (int i = 0; i < 5; i++)
+		{
+			v4g1.click[i] += posinfo[i].click;
+		}
+		v4g1.spept[0] = nval[5];
+		v4g1.mainept[1] = (v4g1.mainept[0] + v4g1.mainept[1]) * 0.5;
+		v4g1.foldept[1] = (v4g1.foldept[0] + (v4g1.foldept[1]*0.25)) * 0.5;
+		v4g1.spept[1] = (v4g1.spept[0] + v4g1.spept[1]) * 0.5;
 	}
-
-
-
+	for (int i = 0; i < 5; i++)
+	{
+		v4g1.click[i] /= dozen;
+	}
+	v4g1mainept = v4g1.mainept[0];
+	v4g1foldept = v4g1.foldept[0];
+	v4g1spept = v4g1.spept[0];
 	return 0;
 }
 
