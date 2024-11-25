@@ -311,7 +311,7 @@ bool scc::Copy(scc& opt)
 	}
 }
 
-bool scc::Exchange(scc opt)
+bool scc::Exchange(scc& opt)
 {
 	try
 	{
@@ -982,22 +982,22 @@ bool scc::EvalV4G1(bool iswillp, bool isReport, int dozen)
 		if (isReport) cout << "\n    Checking upgrade......";
 		for (int i = 0; i < 6; i++)
 		{
-			if (posinfo[i].click = 5)
+			if (posinfo[i].click == 5)
 			{
 				posinfo[i].scale++;
 				posinfo[i].lscale++;
 			}
-			if (posinfo[i].click = 10)
+			if (posinfo[i].click == 10)
 			{
 				posinfo[i].scale++;
 				posinfo[i].lscale++;
 			}
-			if (posinfo[i].click = 15)
+			if (posinfo[i].click == 15)
 			{
 				posinfo[i].scale++;
 				posinfo[i].lscale++;
 			}
-			if (posinfo[i].click = 20)
+			if (posinfo[i].click == 20)
 			{
 				posinfo[i].scale++;
 				posinfo[i].lscale++;
