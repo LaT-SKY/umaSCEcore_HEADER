@@ -13,6 +13,7 @@ using std::string;
 class scc
 {
 private:
+
 	struct diset
 	{
 		int abex[5];
@@ -42,8 +43,6 @@ private:
 		a = b;
 		b = c;
 	};
-
-
 protected:
 	int type, fs, sfs, dr, tr, gatr, trap, speed, stamina, power, willp, wit, sp;
 	int v3g2mainept, v3g2foldept, v3g2spept;
@@ -60,7 +59,7 @@ public:
 
 	int Report(string);
 
-	bool Copy(scc);
+	bool Copy(scc&);
 	bool Exchange(scc);
 
 	bool EvalV3G2();
@@ -282,7 +281,7 @@ int scc::Report(string ty)
 	}
 }
 
-bool scc::Copy(scc opt)
+bool scc::Copy(scc& opt)
 {
 	try
 	{
